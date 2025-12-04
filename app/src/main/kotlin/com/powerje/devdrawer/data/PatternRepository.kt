@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.asStateFlow
 
 interface PatternStorage {
     suspend fun load(): List<Pattern>
+
     suspend fun save(patterns: List<Pattern>)
 }
 
 class PatternRepository(private val storage: PatternStorage) {
-
     private val _patterns = MutableStateFlow<List<Pattern>>(emptyList())
 
     suspend fun initialize() {

@@ -3,16 +3,18 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
     namespace = "com.powerje.devdrawer"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.powerje.devdrawer"
-        minSdk = 36
-        targetSdk = 36
+        minSdk = 35
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -24,7 +26,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -69,4 +71,10 @@ dependencies {
     // Testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom(file("detekt.yml"))
 }

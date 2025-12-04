@@ -7,7 +7,6 @@ import org.junit.Before
 import org.junit.Test
 
 class PatternRepositoryTest {
-
     private lateinit var repository: PatternRepository
 
     @Before
@@ -16,29 +15,33 @@ class PatternRepositoryTest {
     }
 
     @Test
-    fun `empty repository returns empty list`() = runTest {
-        val patterns = repository.getPatterns().first()
-        assertEquals(emptyList<Pattern>(), patterns)
-    }
+    fun `empty repository returns empty list`() =
+        runTest {
+            val patterns = repository.getPatterns().first()
+            assertEquals(emptyList<Pattern>(), patterns)
+        }
 
     @Test
-    fun `save and retrieve patterns`() = runTest {
-        val patterns = listOf(
-            Pattern(label = "Test", regex = "com\\.test\\..*")
-        )
-        repository.savePatterns(patterns)
-        val retrieved = repository.getPatterns().first()
-        assertEquals(patterns, retrieved)
-    }
+    fun `save and retrieve patterns`() =
+        runTest {
+            val patterns =
+                listOf(
+                    Pattern(label = "Test", regex = "com\\.test\\..*"),
+                )
+            repository.savePatterns(patterns)
+            val retrieved = repository.getPatterns().first()
+            assertEquals(patterns, retrieved)
+        }
 
     @Test
-    fun `save overwrites previous patterns`() = runTest {
-        repository.savePatterns(listOf(Pattern("Old", "old\\..*")))
-        val newPatterns = listOf(Pattern("New", "new\\..*"))
-        repository.savePatterns(newPatterns)
-        val retrieved = repository.getPatterns().first()
-        assertEquals(newPatterns, retrieved)
-    }
+    fun `save overwrites previous patterns`() =
+        runTest {
+            repository.savePatterns(listOf(Pattern("Old", "old\\..*")))
+            val newPatterns = listOf(Pattern("New", "new\\..*"))
+            repository.savePatterns(newPatterns)
+            val retrieved = repository.getPatterns().first()
+            assertEquals(newPatterns, retrieved)
+        }
 }
 
 class FakePatternStorage : PatternStorage {

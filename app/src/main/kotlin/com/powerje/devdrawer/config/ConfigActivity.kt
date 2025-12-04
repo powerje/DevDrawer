@@ -50,7 +50,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ConfigActivity : ComponentActivity() {
-
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,20 +59,23 @@ class ConfigActivity : ComponentActivity() {
         // Get widget ID if this is a configuration callback
         appWidgetId = intent?.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID
+            AppWidgetManager.INVALID_APPWIDGET_ID,
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         // Handle back press to finish with result
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                finishWithResult()
-            }
-        })
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    finishWithResult()
+                }
+            },
+        )
 
         setContent {
             MaterialTheme {
                 ConfigScreen(
-                    onFinish = { finishWithResult() }
+                    onFinish = { finishWithResult() },
                 )
             }
         }
@@ -100,7 +102,7 @@ class ConfigActivity : ComponentActivity() {
 @Composable
 fun ConfigScreen(
     viewModel: ConfigViewModel = viewModel(),
-    onFinish: () -> Unit
+    @Suppress("UnusedParameter") onFinish: () -> Unit,
 ) {
     val patterns by viewModel.patterns.collectAsState()
     val editingPattern by viewModel.editingPattern.collectAsState()
@@ -113,27 +115,29 @@ fun ConfigScreen(
             FloatingActionButton(onClick = { viewModel.addPattern() }) {
                 Icon(Icons.Default.Add, contentDescription = "Add pattern")
             }
-        }
+        },
     ) { padding ->
         if (patterns.isEmpty()) {
             EmptyState(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding),
             )
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 itemsIndexed(patterns) { index, pattern ->
                     PatternCard(
                         pattern = pattern,
                         onEdit = { viewModel.editPattern(index) },
-                        onDelete = { viewModel.deletePattern(index) }
+                        onDelete = { viewModel.deletePattern(index) },
                     )
                 }
             }
@@ -146,7 +150,7 @@ fun ConfigScreen(
             initialRegex = editing.regex,
             isNew = editing.index == null,
             onDismiss = { viewModel.dismissDialog() },
-            onSave = { label, regex -> viewModel.savePattern(label, regex) }
+            onSave = { label, regex -> viewModel.savePattern(label, regex) },
         )
     }
 }
@@ -156,17 +160,17 @@ fun EmptyState(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = "No patterns yet",
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Add a pattern like com.mycompany.*\nto match your dev apps",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -175,27 +179,28 @@ fun EmptyState(modifier: Modifier = Modifier) {
 fun PatternCard(
     pattern: Pattern,
     onEdit: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = pattern.label,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
                 Text(
                     text = pattern.regex,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             Row {
@@ -216,7 +221,7 @@ fun PatternDialog(
     initialRegex: String,
     isNew: Boolean,
     onDismiss: () -> Unit,
-    onSave: (String, String) -> Boolean
+    onSave: (String, String) -> Boolean,
 ) {
     var label by remember { mutableStateOf(initialLabel) }
     var regex by remember { mutableStateOf(initialRegex) }
@@ -232,7 +237,7 @@ fun PatternDialog(
                     onValueChange = { label = it },
                     label = { Text("Label") },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
@@ -245,7 +250,7 @@ fun PatternDialog(
                     singleLine = true,
                     isError = regexError != null,
                     supportingText = regexError?.let { { Text(it) } },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         },
@@ -256,7 +261,7 @@ fun PatternDialog(
                         regexError = "Invalid regex pattern"
                     }
                 },
-                enabled = label.isNotBlank() && regex.isNotBlank()
+                enabled = label.isNotBlank() && regex.isNotBlank(),
             ) {
                 Text("Save")
             }
@@ -265,6 +270,6 @@ fun PatternDialog(
             TextButton(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
     )
 }

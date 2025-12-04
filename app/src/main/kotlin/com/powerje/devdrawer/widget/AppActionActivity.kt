@@ -26,12 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 class AppActionActivity : ComponentActivity() {
-
     companion object {
         const val EXTRA_PACKAGE_NAME = "package_name"
         const val EXTRA_APP_NAME = "app_name"
 
-        fun createIntent(context: Context, packageName: String, appName: String): Intent {
+        fun createIntent(
+            context: Context,
+            packageName: String,
+            appName: String,
+        ): Intent {
             return Intent(context, AppActionActivity::class.java).apply {
                 putExtra(EXTRA_PACKAGE_NAME, packageName)
                 putExtra(EXTRA_APP_NAME, appName)
@@ -43,10 +46,11 @@ class AppActionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: run {
-            finish()
-            return
-        }
+        val packageName =
+            intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: run {
+                finish()
+                return
+            }
         val appName = intent.getStringExtra(EXTRA_APP_NAME) ?: packageName
 
         setContent {
@@ -58,7 +62,7 @@ class AppActionActivity : ComponentActivity() {
                     onUninstall = { uninstallApp(packageName) },
                     onAppInfo = { openAppInfo(packageName) },
                     onCopyPackage = { copyPackageName(packageName) },
-                    onDismiss = { finish() }
+                    onDismiss = { finish() },
                 )
             }
         }
@@ -72,17 +76,19 @@ class AppActionActivity : ComponentActivity() {
     }
 
     private fun uninstallApp(packageName: String) {
-        val intent = Intent(Intent.ACTION_DELETE).apply {
-            data = Uri.parse("package:$packageName")
-        }
+        val intent =
+            Intent(Intent.ACTION_DELETE).apply {
+                data = Uri.parse("package:$packageName")
+            }
         startActivity(intent)
         finish()
     }
 
     private fun openAppInfo(packageName: String) {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.parse("package:$packageName")
-        }
+        val intent =
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.parse("package:$packageName")
+            }
         startActivity(intent)
         finish()
     }
@@ -103,53 +109,53 @@ fun ActionDialog(
     onUninstall: () -> Unit,
     onAppInfo: () -> Unit,
     onCopyPackage: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     androidx.compose.ui.window.Dialog(onDismissRequest = onDismiss) {
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = appName,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
                     text = packageName,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Button(
                         onClick = onLaunch,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("Launch")
                     }
                     Button(
                         onClick = onUninstall,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("Uninstall")
                     }
                     Button(
                         onClick = onAppInfo,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("App Info")
                     }
                     Button(
                         onClick = onCopyPackage,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("Copy Package Name")
                     }
