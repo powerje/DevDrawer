@@ -14,13 +14,13 @@ import kotlinx.serialization.json.Json
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "patterns")
 
 class DataStorePatternStorage(private val context: Context) : PatternStorage {
-
     private val patternsKey = stringPreferencesKey("patterns_json")
 
     override suspend fun load(): List<Pattern> {
-        val json = context.dataStore.data.map { preferences ->
-            preferences[patternsKey] ?: "[]"
-        }.first()
+        val json =
+            context.dataStore.data.map { preferences ->
+                preferences[patternsKey] ?: "[]"
+            }.first()
         return Json.decodeFromString(ListSerializer(Pattern.serializer()), json)
     }
 
