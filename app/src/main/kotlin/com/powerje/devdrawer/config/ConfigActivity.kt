@@ -102,7 +102,7 @@ class ConfigActivity : ComponentActivity() {
 @Composable
 fun ConfigScreen(
     viewModel: ConfigViewModel = viewModel(),
-    onFinish: () -> Unit,
+    @Suppress("UnusedParameter") onFinish: () -> Unit,
 ) {
     val patterns by viewModel.patterns.collectAsState()
     val editingPattern by viewModel.editingPattern.collectAsState()

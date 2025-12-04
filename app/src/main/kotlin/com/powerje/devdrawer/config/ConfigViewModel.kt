@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.regex.PatternSyntaxException
 
 class ConfigViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = PatternRepository(DataStorePatternStorage(application))
@@ -47,8 +48,8 @@ class ConfigViewModel(application: Application) : AndroidViewModel(application) 
         // Validate regex
         try {
             regex.toRegex()
-        } catch (e: Exception) {
-            return false
+        } catch (_: PatternSyntaxException) {
+            return false // Invalid regex
         }
 
         val editing = _editingPattern.value ?: return false

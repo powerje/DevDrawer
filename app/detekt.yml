@@ -1,0 +1,22 @@
+complexity:
+  LongMethod:
+    active: false
+  LongParameterList:
+    active: false
+
+exceptions:
+  SwallowedException:
+    active: true
+  TooGenericExceptionCaught:
+    active: true
+
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - Composable
+
+style:
+  ReturnCount:
+    active: false
+  UnusedParameter:
+    active: true

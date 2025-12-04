@@ -1,6 +1,7 @@
 package com.powerje.devdrawer.matching
 
 import com.powerje.devdrawer.data.Pattern
+import java.util.regex.PatternSyntaxException
 
 data class InstalledApp(
     val packageName: String,
@@ -18,8 +19,8 @@ object AppMatcher {
             patterns.mapNotNull { pattern ->
                 try {
                     pattern.regex.toRegex()
-                } catch (e: Exception) {
-                    null
+                } catch (_: PatternSyntaxException) {
+                    null // Invalid regex patterns are silently skipped
                 }
             }
 

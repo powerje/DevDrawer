@@ -2,6 +2,7 @@ package com.powerje.devdrawer.widget
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager.NameNotFoundException
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
@@ -240,7 +241,7 @@ private fun getAppIcon(
             drawable.draw(canvas)
             bitmap
         }
-    } catch (e: Exception) {
-        null
+    } catch (_: NameNotFoundException) {
+        null // App may have been uninstalled
     }
 }
