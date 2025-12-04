@@ -1,6 +1,6 @@
 # DevDrawerWidget
 
-[![API](https://img.shields.io/badge/API-36%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=36)
+[![API](https://img.shields.io/badge/API-35%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=35)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -24,7 +24,7 @@ Add regex patterns like `com.example.*` and the widget displays all matching ins
 
 ## Requirements
 
-- Android 15 (API 36) or higher
+- Android 15 (API 35) or higher
 - JDK 17
 
 ## Building

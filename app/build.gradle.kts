@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.powerje.devdrawer"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.powerje.devdrawer"
-        minSdk = 36
-        targetSdk = 36
+        minSdk = 35
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -76,4 +76,5 @@ dependencies {
 detekt {
     buildUponDefaultConfig = true
     allRules = false
+    baseline = file("detekt-baseline.xml")
 }
