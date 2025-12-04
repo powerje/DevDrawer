@@ -77,17 +77,49 @@ private fun WidgetContent(
     patternsEmpty: Boolean,
     matchedApps: List<MatchedApp>,
 ) {
-    Box(
+    val configIntent =
+        Intent(context, ConfigActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+    Column(
         modifier =
             GlanceModifier
                 .fillMaxSize()
                 .background(GlanceTheme.colors.surface),
-        contentAlignment = Alignment.Center,
     ) {
-        when {
-            patternsEmpty -> EmptyHint(context)
-            matchedApps.isEmpty() -> NoMatches(context)
-            else -> AppList(context, matchedApps)
+        // Settings gear in top-right corner
+        Row(
+            modifier = GlanceModifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.End,
+        ) {
+            Text(
+                text = "⚙",
+                style =
+                    TextStyle(
+                        color = GlanceTheme.colors.onSurfaceVariant,
+                        fontSize = 18.sp,
+                    ),
+                modifier =
+                    GlanceModifier
+                        .padding(8.dp)
+                        .clickable(actionStartActivity(configIntent)),
+            )
+        }
+
+        // Main content
+        Box(
+            modifier =
+                GlanceModifier
+                    .fillMaxSize()
+                    .defaultWeight(),
+            contentAlignment = Alignment.Center,
+        ) {
+            when {
+                patternsEmpty -> EmptyHint(context)
+                matchedApps.isEmpty() -> NoMatches(context)
+                else -> AppList(context, matchedApps)
+            }
         }
     }
 }
