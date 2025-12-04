@@ -1,5 +1,6 @@
 # DevDrawerWidget
 
+[![CI](https://github.com/powerje/DevDrawer/actions/workflows/ci.yml/badge.svg)](https://github.com/powerje/DevDrawer/actions/workflows/ci.yml)
 [![API](https://img.shields.io/badge/API-35%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=35)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
