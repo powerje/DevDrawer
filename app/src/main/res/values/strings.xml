@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DevDrawer</string>
+    <string name="widget_description">Shows apps matching your regex patterns</string>
+    <string name="loading">Loading…</string>
+    <string name="empty_hint">Tap to add patterns like com.example.*</string>
+    <string name="no_matches">No apps match your patterns</string>
+</resources>

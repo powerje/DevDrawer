@@ -1,0 +1,29 @@
+package com.powerje.devdrawer.matching
+
+import com.powerje.devdrawer.data.Pattern
+
+data class InstalledApp(
+    val packageName: String,
+    val appName: String
+)
+
+object AppMatcher {
+
+    fun match(apps: List<InstalledApp>, patterns: List<Pattern>): List<MatchedApp> {
+        if (patterns.isEmpty()) return emptyList()
+
+        val regexes = patterns.mapNotNull { pattern ->
+            try {
+                pattern.regex.toRegex()
+            } catch (e: Exception) {
+                null
+            }
+        }
+
+        return apps
+            .filter { app -> regexes.any { it.matches(app.packageName) } }
+            .map { MatchedApp(it.packageName, it.appName) }
+            .distinctBy { it.packageName }
+            .sortedBy { it.appName.lowercase() }
+    }
+}
