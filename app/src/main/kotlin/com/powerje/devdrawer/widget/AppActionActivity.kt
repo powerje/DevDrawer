@@ -61,6 +61,7 @@ class AppActionActivity : ComponentActivity() {
                     onLaunch = { launchApp(packageName) },
                     onUninstall = { uninstallApp(packageName) },
                     onAppInfo = { openAppInfo(packageName) },
+                    onStorePage = { openStorePage(packageName) },
                     onCopyPackage = { copyPackageName(packageName) },
                     onDismiss = { finish() },
                 )
@@ -99,6 +100,15 @@ class AppActionActivity : ComponentActivity() {
         Toast.makeText(this, "Copied: $packageName", Toast.LENGTH_SHORT).show()
         finish()
     }
+
+    private fun openStorePage(packageName: String) {
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("market://details?id=$packageName")
+            }
+        startActivity(intent)
+        finish()
+    }
 }
 
 @Composable
@@ -108,6 +118,7 @@ fun ActionDialog(
     onLaunch: () -> Unit,
     onUninstall: () -> Unit,
     onAppInfo: () -> Unit,
+    onStorePage: () -> Unit,
     onCopyPackage: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -152,6 +163,12 @@ fun ActionDialog(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("App Info")
+                    }
+                    Button(
+                        onClick = onStorePage,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text("Play Store")
                     }
                     Button(
                         onClick = onCopyPackage,
