@@ -1,0 +1,20 @@
+DevDrawer is the ultimate home screen widget designed specifically for Android developers.
+
+Tired of cluttering your home screen with multiple build variants of your app? DevDrawer helps you organize and access your installed applications using powerful regular expression (regex) patterns.
+
+**Key Features:**
+*   **Pattern-Based Filtering:** Simply define a regex pattern (e.g., `com.example.*`) and DevDrawer will automatically populate with all matching installed apps.
+*   **Automatic Updates:** The widget listens for package installation and removal events, ensuring your list is always up-to-date without manual refreshing.
+*   **Quick Actions:** Long-press or tap to access essential developer shortcuts:
+    *   App Info (Clear Data/Cache)
+    *   Uninstall
+    *   Open in Play Store
+    *   Copy Package Name
+*   **Customizable:** Create multiple widgets with different patterns for different projects.
+
+Streamline your development workflow and keep your device organized with DevDrawer.
+
+Permissions:
+*   `QUERY_ALL_PACKAGES`: Required to detect and list the applications installed on your device that match your rules.
+
+Open Source and built with modern Android standards (Compose, Glance).

@@ -1,0 +1,1 @@
+Filter installed apps with regex. Quick access for Android developers.
