@@ -9,3 +9,9 @@ local.properties
 
 # Android
 app/build/
+
+# Keystore
+*.jks
+*.keystore
+keystore.properties
+fastlane/api-key.json
